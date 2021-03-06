@@ -767,32 +767,37 @@ def handleEvents():
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit(); sys.exit()
-        
+
         if event.type == pygame.JOYBUTTONDOWN:
             input = event.button
-            if input == controls["gameup"]:          
-                if currGame < (len(gameData)-1):
-                    currGame+=1
-                    pygame.mixer.Sound.play(blip)
-            elif input == controls["gamedown"]:
-                if currGame > 0:
-                    currGame-=1
-                    pygame.mixer.Sound.play(blip)            
-            elif input == controls["gameselect"]:  
-                delorean.set_state("playing")
+            if delorean.get_state() == "menu": # only affect menu
+                if input == controls["gameup"]:          
+                    if currGame < (len(gameData)-1):
+                        currGame+=1
+                        pygame.mixer.Sound.play(blip)
+                elif input == controls["gamedown"]:
+                    if currGame > 0:
+                        currGame-=1
+                        pygame.mixer.Sound.play(blip)            
+                elif input == controls["gameselect"]:  
+                    delorean.set_state("playing")
                     
         if event.type == pygame.KEYDOWN:
             #keys = pygame.key.get_pressed()  #checking pressed keys
             if event.key == pygame.K_ESCAPE:
                 pygame.quit(); sys.exit()
-            if event.key == pygame.K_LEFT:
-                if currGame > 0:
-                    currGame-=1
-                    pygame.mixer.Sound.play(blip)
-            if event.key == pygame.K_RIGHT:
-                if currGame < (len(gameData)-1):
-                    currGame+=1
-                    pygame.mixer.Sound.play(blip)
+            if delorean.get_state() == "menu": # only affect menu
+                if event.key == pygame.K_LEFT:
+                    if currGame > 0:
+                        currGame-=1
+                        pygame.mixer.Sound.play(blip)
+                if event.key == pygame.K_RIGHT:
+                    if currGame < (len(gameData)-1):
+                        currGame+=1
+                        pygame.mixer.Sound.play(blip)
+                if event.key == pygame.K_RETURN:
+                    delorean.set_state("playing")
+                
             if event.key == pygame.K_UP:
                 if displayfps:
                     displayfps = False
@@ -800,8 +805,7 @@ def handleEvents():
                     displayfps = True
             if event.key == pygame.K_SPACE:        
                 updateQuote()
-            if event.key == pygame.K_RETURN:
-                delorean.set_state("playing")
+            
 
 
 
