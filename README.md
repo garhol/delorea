@@ -76,7 +76,36 @@ In games.json follow the examples given:
 
     *Provide a screenshot of the same name in the screens directory or leave blank for the default*
 
+## Controls
+The following controls are mapped by default
+```
+Left arrow- Select previous
+Right arrow - Select next game
+Enter - Select game
+Space - Update quote
 
+Up arrow - display fps ( there you go @craigbutcher )
+```
+
+## Configuring joysticks
+By default the first joystick is selected
+In config.py you can set your joystick buttons or axis (and axis for pretending to drive)
+```
+controls = {
+    'steering': 0,
+    'gameup': 10,
+    'gamedown': 9,
+    'gameselect': 1,
+    'quit': 7
+}
+```
+*The default settings are for a G27 wheel with paddles for selecting games and the top thumb buttons for quit(left) and select(right)
+
+**To report the axis and buttons for your joystick run**
+```
+python joystickConfig.py
+```
+Press any button or move an axis (beyond about 60%) to display the reported value
 
 ## You're done.
 
