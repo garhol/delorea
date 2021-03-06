@@ -156,7 +156,7 @@ def loadUIAssets():
 def loadSounds():
     global blip
     blip = pygame.mixer.Sound("assets/sound/blerp.wav")
-    pygame.mixer.music.load('assets/sound/118in64.xm') 
+    pygame.mixer.music.load('assets/sound/vap-back.mp3') 
     
 def loadGameData():
     global gameData, gameTotal, currGame
