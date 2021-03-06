@@ -166,10 +166,17 @@ def loadGameData():
 
     for g in gameData:
         try:
-            g["surf"] = pygame.image.load('screens/'+g["screenshot"]+'.jpg').convert()
+            t = pygame.image.load('screens/'+g["screenshot"]+'.png').convert()
+            g["surf"] = pygame.transform.scale(t, (335, 255))
+        
         except:
-            print("failed to load screen for %s"%g["screenshot"])
-            g["surf"] = generic            
+            try:
+                t = pygame.image.load('screens/'+g["screenshot"]+'.jpg').convert()
+                g["surf"] = pygame.transform.scale(t, (335, 255))
+            
+            except:
+                print("failed to load screen for %s"%g["screenshot"])
+                g["surf"] = generic            
     
     gameTotal = len(gameData)
     #currGame = randrange(gameTotal)
