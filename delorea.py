@@ -1,7 +1,7 @@
 #!/usr/bin/python
-import sys, pygame, json, subprocess, math
+import os, sys, pygame, json, subprocess, math
 from random import randrange, random
-from config import paths, emulators, controls, quotes
+from config.config import paths, emulators, controls, quotes
 
 if not pygame.font: print ('font disabled')
 pygame.init()
@@ -161,7 +161,7 @@ def loadSounds():
 def loadGameData():
     global gameData, gameTotal, currGame
     generic = pygame.image.load('screens/default.jpg').convert()
-    with open("games.json", "r") as read_file:
+    with open("./config/games.json", "r") as read_file:
         gameData = json.load(read_file)
 
     for g in gameData:
@@ -608,12 +608,14 @@ def launchGame()-> subprocess.CompletedProcess:
     currGameObj = gameData[currGame] # get current game
     gsys = currGameObj["system"] # what emulator is needed
     if gsys == "IBM PC":
-        launchstring = currGameObj["exePath"]
+        launchstring = os.path.abspath(currGameObj["exePath"])
+        print(launchstring)
         pr = subprocess.run([launchstring], capture_output=True)
     else:        
         workDir = paths[gsys]  # get the emulator working directory
         emulator = emulators[gsys] # get the emulator excecutable name
-        launchstring = str(workDir+emulator) # setup exe call
+        launchstring = os.path.abspath(str(workDir+emulator)) # setup exe call
+        print(launchstring)
         emArgs = ""
         if gsys == "AM2":
             emArgs = currGameObj["screenshot"]

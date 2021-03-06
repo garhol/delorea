@@ -1,0 +1,23 @@
+[
+	{
+	 "name" : "WipEout XL",
+	 "system" : "IBM PC",
+	 "screenshot" : "wipeoutxl",
+	 "exePath" : "C:/Wobble/Wipeout2.exe"
+	},
+	{
+	 "name" : "Daytona USA",
+	 "system" : "AM2",
+	 "screenshot" : "daytona",
+	},
+	{
+	 "name" : "Scud Race",
+	 "system" : "AM3",
+	 "screenshot" : "scud",
+	},
+	{
+	 "name" : "Virtual Racing",
+	 "system" : "MAME",
+	 "screenshot" : "vr",
+	}
+]

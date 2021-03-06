@@ -1,13 +1,14 @@
-paths = {
-    'AM2': 'D:\Games\m2emulator\\',
-    'AM3': 'D:\Games\Supermodel-x64-r845 Release\\',
-    'MAME': 'D:\Games\mame32\\'
-    }
 emulators = {
     'AM2': 'EMULATOR.EXE',
     'AM3': 'supermodel.exe',
     'MAME': 'Mame32.exe'
 }
+
+paths = {
+    'AM2': 'D:/Games/m2emulator/',
+    'AM3': 'D:/Games/Supermodel-x64-r845 Release/',
+    'MAME': 'D:/Games/mame32/'
+    }
 
 controls = {
     'steering': 0,
