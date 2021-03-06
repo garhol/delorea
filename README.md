@@ -1,8 +1,8 @@
 # Delorea
-## Python &amp; Pygame racing game launcher
+Python &amp; Pygame racing game launcher
 
 
-**Initial setup**
+## Initial setup
 
 Install python - https://www.python.org/
 
@@ -30,7 +30,7 @@ From the delorea folder in your terminal run
 pip install -r requirements.txt
 ```
 
-**Setting up your emulators**
+## Setting up your emulators
 
 Copy the sample-config.py and games.json from the delorea folder.
 Drop them both in the config folder and remove the "sample-" from the names
