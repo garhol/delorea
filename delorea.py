@@ -15,7 +15,7 @@ realw = realscreenInfo.current_w
 realh = realscreenInfo.current_h
 
 windowSize = 1000, 700 # Simple game size for drawing to 
-
+centerH = windowSize[0]*0.5
 #GLOBALS
 
 gameTotal = sunpos = suntick = smsunpos = int()
@@ -116,13 +116,12 @@ def loadUIAssets():
     global backg, tvsurface, staticGroup, tvsurfacelg, sun, smsun, m1, m2
     
     #ui elements
-    global surround, arrowr, arrowl, shadm, smshadm, road, logo, horizon
+    global shadm, smshadm, road, logo, horizon
     
     # car and other stuff
     global car, carshadow
     staticGroup = []
-    
-    #logo = pygame.image.load('assets/images/flux.png').convert()
+
     backg = pygame.image.load('assets/images/background.png').convert()
     sun = pygame.image.load('assets/images/sun.png').convert_alpha()
     smsun = pygame.transform.smoothscale (sun, (43, 43))
@@ -137,16 +136,15 @@ def loadUIAssets():
     car = pygame.image.load('assets/images/deloreanrear.png').convert_alpha()
     carshadow = pygame.image.load('assets/images/deloreanshadow.png').convert_alpha()    
     logo = pygame.image.load('assets/images/delorea.png').convert_alpha()
-    s1 = pygame.image.load('assets/images/st1.png').convert()
-    s2 = pygame.image.load('assets/images/st2.png').convert()
-    s3 = pygame.image.load('assets/images/st3.png').convert()
-    s4 = pygame.image.load('assets/images/st4.png').convert()
+    s1 = pygame.image.load('assets/images/static.png').convert()
+    s2 = pygame.transform.flip(s1, True, False)
+    s3 = pygame.transform.flip(s1, False, True)
+    s4 = pygame.image.load('assets/images/logo.png').convert()
     staticGroup.append(s1)
     staticGroup.append(s2)
     staticGroup.append(s3)
     staticGroup.append(s4)
-    surround = pygame.Surface((350, 266))
-    surround.fill(cyan)
+    
     tvsurface = pygame.image.load('assets/images/screen-over.png').convert_alpha()
     tvsurfacelg = pygame.image.load('assets/images/screen-over-lg.png').convert_alpha()
     shadm =  pygame.image.load('assets/images/shad.png').convert_alpha()
@@ -398,7 +396,7 @@ def renderSegment(c, w2, x2, y2, w1, x1, y1, p, f = 0):
         fh = y1-y2
         f = f*255
 
-        s = pygame.Surface((1000,fh))  # the size of your rect
+        s = pygame.Surface((width,fh))  # the size of your rect
         s.set_alpha(255-f)                # alpha level
         s.fill((0,0, 0))           # this fills the entire surface
         screen.blit(s, (0, y2))    # (0,0) are the top-left coordinates
@@ -462,7 +460,6 @@ def renderBackground():
     # This is just the backdrop - bad name
     ############################
     screen.blit(backg, (0,0))
-    pygame.draw.line(screen, greyHorizon, (0,381),(1000,381))
     updateWorld()
     drawRoad()
     
@@ -577,7 +574,7 @@ def renderLogo():
     if pygame.font:   
         q = quotes[currquote]
         text = gamefont.render(q , 1, lgrey)
-        textpos = text.get_rect(centerx = windowSize[0]/2, centery = quoteV)
+        textpos = text.get_rect(centerx = centerH, centery = quoteV)
         screen.blit(text, textpos)
     if displayfps:
         fps = str(int(clock.get_fps()))
@@ -591,7 +588,7 @@ def renderLoading():
     global gamePlaying, launchCounter   
     if pygame.font:   
         text = titleFont.render("Loading..." , 1, drkgrey)
-        textpos = text.get_rect(centerx = windowSize[0]/2, centery = windowSize[1]/2)
+        textpos = text.get_rect(centerx = centerH, centery = windowSize[1]/2)
         screen.blit(text, textpos)
     
     if gamePlaying == False:
@@ -643,14 +640,6 @@ def renderGames():
     
     global gameData, gameTotal, posy
     g = gameData[currGame]
-    # og = None
-    # ng = None
-    
-    # if currGame > 0:
-        # og = arrowl
-        
-    # if currGame < len(gameData)-1:
-        # ng = arrowr
     
     ogInd = currGame-1
     ngInd = currGame+1
@@ -666,13 +655,10 @@ def renderGames():
     currGameSurf = g["surf"]
     tilew = currGameSurf.get_width()
     tileh = currGameSurf.get_height()
-    currGameSurf.set_alpha(255)
-    posx = (windowSize[0]*0.5) - (tilew*0.5)
+    posx = centerH - (tilew*0.5)
     posy = (29)# was 29
     sqrect.top = posy
     sqrect.left = posx 
-    
-    #screen.blit(surround, (325, 23))
     
     screen.blit(currGameSurf, sqrect)
     renderStatic()
@@ -692,22 +678,6 @@ def renderGames():
         systotal = sysFont.render(gameCount, 1, lgrey)
         syspos = systotal.get_rect(top = 10, left = 20)
         screen.blit(systotal, syspos)
-        
-    # weeW = int(tilew*0.3)
-    # weeH = int(tileh*0.3)
-    
-    # if og:
-        # rec = arrowl.get_rect()
-        # rec.left = 286
-        # rec.top = 117
-        # screen.blit(arrowl, rec)
-    # #render next game
-    
-    # if ng:
-        # rec = arrowr.get_rect()
-        # rec.left = 688
-        # rec.top = 117
-        # screen.blit(arrowr, rec)
 
     screen.blit(shadm, (293, posy+350))
     
@@ -751,38 +721,33 @@ def renderStatic():
     displ = 0;
     if (staticCounter <= 1099):
         return
-    
-    if (staticCounter <= 1100):
-        displ = randrange(14)
-        if (displ >= 3):
-            return
-    
-    if (staticCounter >= 1101 and staticCounter <= 1130):  
-        displ = randrange(4);
-        if (displ>=4):
-            return
-    
-    if (staticCounter >= 1131 and staticCounter <= 1150):  
-        displ = randrange(3)+2;
-        if (displ>=4):
+    else:
+        if (staticCounter <= 1100):
+            displ = randrange(14)
+            if (displ >= 3):
+                return
+        elif (staticCounter <= 1130):  
+            displ = randrange(4);
+            if (displ>=4):
+                return
+        elif (staticCounter <= 1150):  
+            displ = randrange(3)+2;
+            if (displ>=4):
+                return
+        elif (staticCounter <= 1158):  
+            displ = 3
+        elif (staticCounter <= 1170):  
+            displ = randrange(4);
+            if (displ>=4):
+                return
+        elif (staticCounter >= 1171):
+            staticCounter = 0
+            updateQuote()
             return
             
-    if (staticCounter >= 1151 and staticCounter <= 1158):  
-        displ = 3
-        
-    if (staticCounter >= 1159 and staticCounter <= 1170):  
-        displ = randrange(4);
-        if (displ>=4):
-            return
-    
-    if (staticCounter >= 1171):
-        staticCounter = 0
-        updateQuote()
-        return
-        
-    if (displ != 0):   
-        currStatic = staticGroup[displ]
-        screen.blit(currStatic, (333, posy, 335, 255))
+        if (displ != 0):   
+            currStatic = staticGroup[displ]
+            screen.blit(currStatic, (333, posy, 335, 255))
 
 def handleEvents():
     #########################
@@ -862,10 +827,11 @@ def renderGameState():
         renderLoading()   
     handleEvents() # finally handle input event
     
-    scaledscreen = pygame.transform.smoothscale (screen,(realw, realh)) # scale up the screen to window size
-    ox = (realw - 1000)*0.5
-    oy = (realh - 700)*0.5
+    #ox = (realw - 1000)*0.5
+    #oy = (realh - 700)*0.5
     #actualscreen.blit(screen, (ox, oy)) # blit to the actual screen
+    
+    scaledscreen = pygame.transform.smoothscale (screen,(realw, realh)) # scale up the screen to window size
     actualscreen.blit(scaledscreen, (0 ,0))
     pygame.display.flip() # flip the buffer
 
