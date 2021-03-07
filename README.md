@@ -63,7 +63,7 @@ In games.json follow the examples given:
 	 "binary" : "FlatOut2.exe"
 	},
     ```
-   *Again, use `/` as separators*
+   *Again, use `/` as separators. Delorea will set the working directory to help binaries find assets etc.*
 
 - **AM2/AM3/Mame**
     ```
