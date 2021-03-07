@@ -55,12 +55,13 @@ In games.json follow the examples given:
 
 - **Native PC games**
    ```
-    {
-      "name" : "WipEout XL",
-      "system" : "IBM PC",
-      "screenshot" : "wipeoutxl",
-      "exePath" : "C:/Wobble/Wipeout2.exe"
-    },
+	{
+	 "name" : "Flatout 2",
+	 "system" : "IBM PC",
+	 "screenshot" : "flatou2",
+	 "working_dir" : "C:/Program Files (x86)/Steam/steamapps/common/FlatOut2/",
+	 "binary" : "FlatOut2.exe"
+	},
     ```
    *Again, use `/` as separators*
 

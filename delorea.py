@@ -615,9 +615,9 @@ def launchGame()-> subprocess.CompletedProcess:
     currGameObj = gameData[currGame] # get current game
     gsys = currGameObj["system"] # what emulator is needed
     if gsys == "IBM PC":
-        launchstring = os.path.abspath(currGameObj["exePath"])
-        print(launchstring)
-        pr = subprocess.run([launchstring], capture_output=True)
+        working_dir = os.path.abspath(currGameObj["working_dir"]) # move to the directory
+        launchstring = os.path.abspath(currGameObj["working_dir"]+currGameObj["binary"])
+        pr = subprocess.run([launchstring], capture_output=True, cwd=working_dir)
     else:        
         workDir = paths[gsys]  # get the emulator working directory
         emulator = emulators[gsys] # get the emulator excecutable name
